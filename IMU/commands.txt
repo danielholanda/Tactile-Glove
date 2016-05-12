@@ -1,0 +1,1 @@
+Download original code: git clone https://github.com/wesleymilan/C-Library-Dual-MPU6050-DMP-for-Intel-Galileo-Edison.git
