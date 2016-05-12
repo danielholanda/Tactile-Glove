@@ -201,7 +201,11 @@ void loop() {
 	    //Serial.write(teapotPacket, 20);
 	    imu1IsOK=false;
 	    imu2IsOK=false;
-	    printf("\n");
+	    char chProgramVar[20] = { (char)teapotPacket[0],(char)teapotPacket[1],(char)teapotPacket[2],(char)teapotPacket[3],(char)teapotPacket[4],(char)teapotPacket[5],(char)teapotPacket[6],(char)teapotPacket[7],(char)teapotPacket[8],(char)teapotPacket[9],(char)teapotPacket[10],(char)teapotPacket[11],(char)teapotPacket[12],(char)teapotPacket[13],(char)teapotPacket[14],(char)teapotPacket[15],(char)teapotPacket[16],(char)teapotPacket[17],(char)teapotPacket[18],(char)teapotPacket[19] };
+	    //char chProgramVar[] = "hello world" ;
+	    setenv("ShellVar", chProgramVar, 1) ;
+	    system("echo $ShellVar > /dev/ttyGS0");
+	    //printf("DataIsOk\n");
     }
     
 }

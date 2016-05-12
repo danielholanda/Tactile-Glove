@@ -47,7 +47,7 @@ float euler[3];         // [psi, theta, phi]    Euler angle container
 float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
 // packet structure for InvenSense teapot demo
-uint8_t teapotPacket[14] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\n' };
+uint8_t teapotPacket[20] = { '$', 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '\r', '\n' };
 
 //Checks is data is ready to send
 bool imu1IsOK;
@@ -151,8 +151,7 @@ void loop() {
                 teapotPacket[7] = headFifoBuffer[9];
                 teapotPacket[8] = headFifoBuffer[12];
                 teapotPacket[9] = headFifoBuffer[13];
-                //Serial.write(teapotPacket, 14);
-                teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
+                //teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
 		imu1IsOK=true;
             #endif
             //printf("\n");
@@ -183,16 +182,15 @@ void loop() {
 
             #ifdef OUTPUT_TEAPOT
                 // display quaternion values in InvenSense Teapot demo format:
-                teapotPacket[2] = bodyFifoBuffer[0];
-                teapotPacket[3] = bodyFifoBuffer[1];
-                teapotPacket[4] = bodyFifoBuffer[4];
-                teapotPacket[5] = bodyFifoBuffer[5];
-                teapotPacket[6] = bodyFifoBuffer[8];
-                teapotPacket[7] = bodyFifoBuffer[9];
-                teapotPacket[8] = bodyFifoBuffer[12];
-                teapotPacket[9] = bodyFifoBuffer[13];
-                //Serial.write(teapotPacket, 14);
-                teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
+                teapotPacket[10] = bodyFifoBuffer[0];
+                teapotPacket[11] = bodyFifoBuffer[1];
+                teapotPacket[12] = bodyFifoBuffer[4];
+                teapotPacket[13] = bodyFifoBuffer[5];
+                teapotPacket[14] = bodyFifoBuffer[8];
+                teapotPacket[15] = bodyFifoBuffer[9];
+                teapotPacket[16] = bodyFifoBuffer[12];
+                teapotPacket[17] = bodyFifoBuffer[13];
+                //teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
 		imu2IsOK=true;
             #endif
             printf("\n");
@@ -203,7 +201,11 @@ void loop() {
 	    //Serial.write(teapotPacket, 20);
 	    imu1IsOK=false;
 	    imu2IsOK=false;
-	    printf("Data is ok!\n");
+	    char chProgramVar[20] = { (char)teapotPacket[0],(char)teapotPacket[1],(char)teapotPacket[2],(char)teapotPacket[3],(char)teapotPacket[4],(char)teapotPacket[5],(char)teapotPacket[6],(char)teapotPacket[7],(char)teapotPacket[8],(char)teapotPacket[9],(char)teapotPacket[10],(char)teapotPacket[11],(char)teapotPacket[12],(char)teapotPacket[13],(char)teapotPacket[14],(char)teapotPacket[15],(char)teapotPacket[16],(char)teapotPacket[17],(char)teapotPacket[18],(char)teapotPacket[19] };
+	    //char chProgramVar[] = "hello world" ;
+	    setenv("ShellVar", chProgramVar, 1) ;
+	    system("echo $ShellVar > /dev/ttyGS0");
+	    printf("DataIsOk\n");
     }
     
 }
