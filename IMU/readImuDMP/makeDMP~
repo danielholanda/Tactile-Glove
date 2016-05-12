@@ -1,1 +1,1 @@
-g++ -DDMP_FIFO_RATE=9 -Wall -g -O2 demo_raw.cpp -o demo_raw -lm I2Cdev.o MPU6050.o
+g++ -DDMP_FIFO_RATE=9 -Wall -g -O2 readImuDMP.cpp -o readImuDMP -lm I2Cdev.o MPU6050.o

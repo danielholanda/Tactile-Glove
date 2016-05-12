@@ -10,6 +10,16 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include <errno.h>
+#include <signal.h>
+#include "mraa.h"
+
+#define thumb_f 8
+#define index_f 9
+#define middle_f 10
+#define ring_f 11
+#define pinky_f 12
+
 // class default I2C address is 0x68
 // specific I2C addresses may be passed as a parameter here
 // AD0 low = 0x68 (default for SparkFun breakout and InvenSense evaluation board)
@@ -60,6 +70,9 @@ bool imu2IsOK;
 int clientSocket;
 struct sockaddr_in serverAddr;
 socklen_t addr_size;
+
+//For GPIO 
+mraa_gpio_context gpio[5];
 
 // ================================================================
 // ===                      INITIAL SETUP                       ===
@@ -136,7 +149,22 @@ void setup() {
         printf("DMP Initialization failed (code %d)\n", mpu_bodyStatus);
         
     }
-    
+
+    //Setting GPIO	
+    mraa_init();
+    fprintf(stdout, "MRAA Version: %s\n", mraa_get_version());
+    gpio[0] = mraa_gpio_init(thumb_f);
+    gpio[1] = mraa_gpio_init(index_f);
+    gpio[2] = mraa_gpio_init(middle_f);
+    gpio[3] = mraa_gpio_init(ring_f);
+    gpio[4] = mraa_gpio_init(pinky_f);
+
+    // set direction to OUT
+    mraa_gpio_dir(gpio[0], MRAA_GPIO_OUT);
+    mraa_gpio_dir(gpio[1], MRAA_GPIO_OUT);
+    mraa_gpio_dir(gpio[2], MRAA_GPIO_OUT);
+    mraa_gpio_dir(gpio[3], MRAA_GPIO_OUT);
+    mraa_gpio_dir(gpio[4], MRAA_GPIO_OUT);
     
 }
 
@@ -244,9 +272,11 @@ void loop() {
 	for(int i=0;i<5;i++){
 		if((finger>>i)&&1==1){
 			printf("1_");
+			mraa_gpio_write(gpio[i],1);
 		}
 		else{
 			printf("0_");
+			mraa_gpio_write(gpio[i],0);
 		}
 	}
     	
