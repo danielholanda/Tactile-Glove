@@ -1,3 +1,7 @@
 Download original code: git clone https://github.com/wesleymilan/C-Library-Dual-MPU6050-DMP-for-Intel-Galileo-Edison.git
 To compile everyhing use: make
 To compile our version of DMP use: ./makeDMP
+To upload to git: ./gitGo
+To download MRAA library: git clone https://github.com/intel-iot-devkit/mraa.git
+To compile MRAA library: mkdir build; cd build; cmake ..
+To compile MRAA examples: gcc blink_onboard.c -o blink_onboard -lmraa

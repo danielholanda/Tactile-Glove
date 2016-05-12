@@ -17,11 +17,11 @@ MPU6050 mpu_body(0x69);
 // uncomment "OUTPUT_READABLE_QUATERNION" if you want to see the actual
 // quaternion components in a [w, x, y, z] format (not best for parsing
 // on a remote host such as Processing or something though)
-//#define OUTPUT_READABLE_QUATERNION
+#define OUTPUT_READABLE_QUATERNION
 
 // uncomment "OUTPUT_TEAPOT" if you want output that matches the
 // format used for the InvenSense teapot demo
-#define OUTPUT_TEAPOT
+//#define OUTPUT_TEAPOT
 
 // MPU control/status vars
 bool dmpHeadReady = false;  // set true if DMP init was successful
@@ -49,20 +49,12 @@ float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gra
 // packet structure for InvenSense teapot demo
 uint8_t teapotPacket[14] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\n' };
 
-//Checks is data is ready to send
-bool imu1IsOK;
-bool imu2IsOK;
 
 // ================================================================
 // ===                      INITIAL SETUP                       ===
 // ================================================================
 
 void setup() {
-
-    // Variables for checking if data is ready
-    imu1IsOK=false;
-    imu2IsOK=false;
-  
     // initialize device
     printf("Initializing I2C devices...\n");
     mpu_head.initialize();
@@ -151,11 +143,10 @@ void loop() {
                 teapotPacket[7] = headFifoBuffer[9];
                 teapotPacket[8] = headFifoBuffer[12];
                 teapotPacket[9] = headFifoBuffer[13];
-                //Serial.write(teapotPacket, 14);
+                Serial.write(teapotPacket, 14);
                 teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
-		imu1IsOK=true;
             #endif
-            //printf("\n");
+            printf("\n");
         }
     }
     
@@ -191,19 +182,11 @@ void loop() {
                 teapotPacket[7] = bodyFifoBuffer[9];
                 teapotPacket[8] = bodyFifoBuffer[12];
                 teapotPacket[9] = bodyFifoBuffer[13];
-                //Serial.write(teapotPacket, 14);
+                Serial.write(teapotPacket, 14);
                 teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
-		imu2IsOK=true;
             #endif
             printf("\n");
         }
-    }
-
-    if(imu1IsOK && imu2IsOK){
-	    //Serial.write(teapotPacket, 20);
-	    imu1IsOK=false;
-	    imu2IsOK=false;
-	    printf("Data is ok!\n");
     }
     
 }
