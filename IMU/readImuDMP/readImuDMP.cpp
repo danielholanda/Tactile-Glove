@@ -6,7 +6,9 @@
 #include <math.h>
 #include "I2Cdev.h"
 #include "MPU6050_6Axis_MotionApps20.h"
-#include <fcntl.h>  
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 // class default I2C address is 0x68
 // specific I2C addresses may be passed as a parameter here
@@ -54,11 +56,36 @@ uint8_t teapotPacket[20] = { '$', 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 bool imu1IsOK;
 bool imu2IsOK;
 
+//Prepares SOcket connection
+int clientSocket;
+char buffer_recv[100];
+struct sockaddr_in serverAddr;
+socklen_t addr_size;
+
 // ================================================================
 // ===                      INITIAL SETUP                       ===
 // ================================================================
 
 void setup() {
+
+
+
+    clientSocket = socket(PF_INET, SOCK_STREAM, 0);
+
+    /*---- Configure settings of the server address struct ----*/
+    /* Address family = Internet */
+    serverAddr.sin_family = AF_INET;
+    /* Set port number, using htons function to use proper byte order */
+    serverAddr.sin_port = htons(7891);
+    /* Set IP address to localhost */
+    serverAddr.sin_addr.s_addr = inet_addr("10.13.100.57");
+    /* Set all bits of the padding field to 0 */
+    memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
+
+    /*---- Connect the socket to the server using the address struct ----*/
+    addr_size = sizeof serverAddr;
+    connect(clientSocket, (struct sockaddr *) &serverAddr, addr_size);
+
 
     // Variables for checking if data is ready
     imu1IsOK=false;
@@ -202,28 +229,14 @@ void loop() {
 	    //Serial.write(teapotPacket, 20);
 	    imu1IsOK=false;
 	    imu2IsOK=false;
-	    char chProgramVar[20] = { (char)teapotPacket[0],(char)teapotPacket[1],(char)teapotPacket[2],(char)teapotPacket[3],(char)teapotPacket[4],(char)teapotPacket[5],(char)teapotPacket[6],(char)teapotPacket[7],(char)teapotPacket[8],(char)teapotPacket[9],(char)teapotPacket[10],(char)teapotPacket[11],(char)teapotPacket[12],(char)teapotPacket[13],(char)teapotPacket[14],(char)teapotPacket[15],(char)teapotPacket[16],(char)teapotPacket[17],(char)teapotPacket[18],(char)teapotPacket[19] };
-	    //char chProgramVar[] = "hello world" ;
-	    //setenv("ShellVar", chProgramVar, 1) ;
-	    //system("echo $ShellVar > /dev/ttyGS0");
-	    //printf("DataIsOk\n");
-
-	    char byte;
-	    int commHandle = open("/dev/ttyGS0", O_RDWR);
-	    write(commHandle, chProgramVar, 20);
-           
-            ssize_t size = read(commHandle, &byte, 1);
-	    printf("Read byte %c of size %d\n", byte,size);
-	    
-	    close(commHandle);
-
-	    //Reading thingers to vibrate
-	    //system("cat /dev/ttyGS0");
-	    //system("read $Shellvar < /dev/ttyGS0");
-	    //const char* s = getenv("Shellvar");
-	    //printf("Received %s \n", s);
-    }
     
+    	printf("DataIsOk\n");
+
+
+   	send(clientSocket,teapotPacket,sizeof(teapotPacket),0);
+
+    }
+
 }
 
 int main() {
