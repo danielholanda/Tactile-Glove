@@ -236,9 +236,20 @@ void loop() {
 	
     
 
-    char buffer_recv[1];
-    recv(clientSocket, buffer_recv, sizeof(buffer_recv), 0);
-          printf("Data received: %s\n",buffer_recv);
+    	char buffer_recv[1];
+    	recv(clientSocket, buffer_recv, sizeof(buffer_recv), 0);
+    	printf("Data received: %s\n",buffer_recv);
+    	
+	uint8_t finger = (uint8_t)buffer_recv[0];
+	for(int i=0;i<5;i++){
+		if((finger>>i)&&1==1){
+			printf("1_");
+		}
+		else{
+			printf("0_");
+		}
+	}
+    	
     }
 }
 

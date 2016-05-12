@@ -234,12 +234,23 @@ void loop() {
 
    	send(clientSocket,teapotPacket,sizeof(teapotPacket),0);
 	
+    
+
+    	char buffer_recv[1];
+    	recv(clientSocket, buffer_recv, sizeof(buffer_recv), 0);
+    	printf("Data received: %s\n",buffer_recv);
+    	
+	uint8_t thinger = (uint8_t)buffer_recv[0];
+	for(int i=0;i<5;i++){
+		if((thinger>>i)&1==1){
+			printf("1_");
+		}
+		else{
+			printf("0_");
+		}
+	}
+    	
     }
-
-    char buffer_recv[1];
-    recv(clientSocket, buffer_recv, sizeof(buffer_recv), 0);
-          printf("Data received: %s\n",buffer_recv);
-
 }
 
 int main() {
