@@ -90,7 +90,7 @@ void setup() {
     /* Set port number, using htons function to use proper byte order */
     serverAddr.sin_port = htons(7891);
     /* Set IP address to localhost */
-    serverAddr.sin_addr.s_addr = inet_addr("10.13.100.57");
+    serverAddr.sin_addr.s_addr = inet_addr("10.13.100.20");
     /* Set all bits of the padding field to 0 */
     memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 

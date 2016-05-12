@@ -63,8 +63,8 @@ coord3D handAngle = new coord3D();//Angulo do braço
 coord3D handXYZ= new coord3D();
 
 void setup() {
-  size(640, 360, P3D);
-  //fullScreen(P3D);
+  //size(640, 360, P3D);
+  fullScreen(P3D);
   sView.rotX=0;
   sView.rotY=0;
   sView.zoom=1;
@@ -80,12 +80,9 @@ void setup() {
 void draw() {
 
   thisClient = myServer.available();
-  while (thisClient ==null) {
-    thisClient = myServer.available();
-  };
+
   if (thisClient !=null) {
 
-    //whatClientSaid = thisClient.readString();
 
     if (thisClient.available() > 0) {
       charIn = thisClient.readChar();
@@ -175,7 +172,7 @@ void draw() {
 
   handAngle.x=(ypr_MPU1[2]+PI/2)-armAngle.x;
   //handAngle.y=(ypr_MPU1[1])-armAngle.y;
-  handAngle.z=(ypr_MPU1[0])-armAngle.x;
+  //handAngle.z=(ypr_MPU1[0])-armAngle.x;
 
 
   pushMatrix();

@@ -71,6 +71,9 @@ int clientSocket;
 struct sockaddr_in serverAddr;
 socklen_t addr_size;
 
+//For GPIO 
+mraa_gpio_context gpio[5];
+
 // ================================================================
 // ===                      INITIAL SETUP                       ===
 // ================================================================
@@ -87,7 +90,7 @@ void setup() {
     /* Set port number, using htons function to use proper byte order */
     serverAddr.sin_port = htons(7891);
     /* Set IP address to localhost */
-    serverAddr.sin_addr.s_addr = inet_addr("10.13.100.57");
+    serverAddr.sin_addr.s_addr = inet_addr("10.13.100.20");
     /* Set all bits of the padding field to 0 */
     memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 
@@ -150,7 +153,6 @@ void setup() {
     //Setting GPIO	
     mraa_init();
     fprintf(stdout, "MRAA Version: %s\n", mraa_get_version());
-    mraa_gpio_context gpio[5];
     gpio[0] = mraa_gpio_init(thumb_f);
     gpio[1] = mraa_gpio_init(index_f);
     gpio[2] = mraa_gpio_init(middle_f);
@@ -270,11 +272,11 @@ void loop() {
 	for(int i=0;i<5;i++){
 		if((finger>>i)&&1==1){
 			printf("1_");
-			mraa_gpio_write(gpio[i],1);
+			mraa_gpio_write(gpio[i],0);
 		}
 		else{
 			printf("0_");
-			mraa_gpio_write(gpio[i],0);
+			mraa_gpio_write(gpio[i],1);
 		}
 	}
     	
