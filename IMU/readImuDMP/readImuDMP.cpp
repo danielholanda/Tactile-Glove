@@ -58,7 +58,6 @@ bool imu2IsOK;
 
 //Prepares SOcket connection
 int clientSocket;
-char buffer_recv[100];
 struct sockaddr_in serverAddr;
 socklen_t addr_size;
 
@@ -234,9 +233,13 @@ void loop() {
 
 
    	send(clientSocket,teapotPacket,sizeof(teapotPacket),0);
+	
+    
 
+    char buffer_recv[1];
+    recv(clientSocket, buffer_recv, sizeof(buffer_recv), 0);
+          printf("Data received: %s\n",buffer_recv);
     }
-
 }
 
 int main() {
