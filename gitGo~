@@ -5,6 +5,6 @@ read comment
 echo "You entered: $comment"
 
 git add *
-git rm $(git ls-files --deleted)
+git ls-files --deleted -z | xargs -0 git rm
 git commit -m '$comment'
 git push origin master
