@@ -84,39 +84,40 @@ void setup() {
     // initialize device
     printf("Initializing I2C devices...\n");
     mpu_head.initialize();
- //   mpu_body.initialize();
+   //usleep(100);
+    mpu_body.initialize();
 
     // verify connection
     printf("Testing device connections...\n");
     printf(mpu_head.testConnection() ? "MPU6050 connection successful\n" : "MPU6050 connection failed\n");
-   // printf(mpu_body.testConnection() ? "MPU6050 connection successful\n" : "MPU6050 connection failed\n");
+    printf(mpu_body.testConnection() ? "MPU6050 connection successful\n" : "MPU6050 connection failed\n");
     
     // load and configure the DMP
     printf("Initializing DMP...\n");
     mpu_headStatus = mpu_head.dmpInitialize();
-   // mpu_bodyStatus = mpu_body.dmpInitialize();
+    mpu_bodyStatus = mpu_body.dmpInitialize();
     
     // make sure it worked (returns 0 if so)
     if (mpu_headStatus == 0 && mpu_bodyStatus == 0) {
         // turn on the DMP, now that it's ready
         printf("Enabling DMP...\n");
         mpu_head.setDMPEnabled(true);
-       // mpu_body.setDMPEnabled(true);
+        mpu_body.setDMPEnabled(true);
 
         // enable Arduino interrupt detection
         //Serial.println(F("Enabling interrupt detection (Arduino external interrupt 0)..."));
         //attachInterrupt(0, dmpDataReady, RISING);
         mpu_headIntStatus = mpu_head.getIntStatus();
-        //mpu_bodyIntStatus = mpu_head.getIntStatus();
+        mpu_bodyIntStatus = mpu_head.getIntStatus();
 
         // set our DMP Ready flag so the main loop() function knows it's okay to use it
         printf("DMP ready!\n");
         dmpHeadReady = true;
-        //dmpBodyReady = true;
+        dmpBodyReady = true;
 
         // get expected DMP packet size for later comparison
         headPacketSize = mpu_head.dmpGetFIFOPacketSize();
-        //bodyPacketSize = mpu_body.dmpGetFIFOPacketSize();
+        bodyPacketSize = mpu_body.dmpGetFIFOPacketSize();
     } else {
         // ERROR!
         // 1 = initial memory load failed
@@ -209,7 +210,7 @@ void loop() {
         }
     }
     
- /*   
+    
     if (dmpBodyReady)
     {
         // get current FIFO count
@@ -281,7 +282,7 @@ void loop() {
             printf("\n");
         }
     }
-    */
+    
 }
 
 int main() {

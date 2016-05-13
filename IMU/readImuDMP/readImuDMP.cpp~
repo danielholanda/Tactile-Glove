@@ -12,7 +12,7 @@
 // AD0 low = 0x68 (default for SparkFun breakout and InvenSense evaluation board)
 // AD0 high = 0x69
 MPU6050 mpu_head(0x68);
-MPU6050 mpu_body(0x69);
+//MPU6050 mpu_body(0x69);
 
 // uncomment "OUTPUT_READABLE_QUATERNION" if you want to see the actual
 // quaternion components in a [w, x, y, z] format (not best for parsing
@@ -84,7 +84,8 @@ void setup() {
     // initialize device
     printf("Initializing I2C devices...\n");
     mpu_head.initialize();
- //   mpu_body.initialize();
+   //usleep(100);
+    //mpu_body.initialize();
 
     // verify connection
     printf("Testing device connections...\n");
@@ -101,22 +102,22 @@ void setup() {
         // turn on the DMP, now that it's ready
         printf("Enabling DMP...\n");
         mpu_head.setDMPEnabled(true);
-        mpu_body.setDMPEnabled(true);
+       // mpu_body.setDMPEnabled(true);
 
         // enable Arduino interrupt detection
         //Serial.println(F("Enabling interrupt detection (Arduino external interrupt 0)..."));
         //attachInterrupt(0, dmpDataReady, RISING);
         mpu_headIntStatus = mpu_head.getIntStatus();
-        mpu_bodyIntStatus = mpu_head.getIntStatus();
+        //mpu_bodyIntStatus = mpu_head.getIntStatus();
 
         // set our DMP Ready flag so the main loop() function knows it's okay to use it
         printf("DMP ready!\n");
         dmpHeadReady = true;
-        dmpBodyReady = true;
+        //dmpBodyReady = true;
 
         // get expected DMP packet size for later comparison
         headPacketSize = mpu_head.dmpGetFIFOPacketSize();
-        bodyPacketSize = mpu_body.dmpGetFIFOPacketSize();
+        //bodyPacketSize = mpu_body.dmpGetFIFOPacketSize();
     } else {
         // ERROR!
         // 1 = initial memory load failed
@@ -209,7 +210,7 @@ void loop() {
         }
     }
     
-    
+ /*   
     if (dmpBodyReady)
     {
         // get current FIFO count
@@ -281,7 +282,7 @@ void loop() {
             printf("\n");
         }
     }
-    
+    */
 }
 
 int main() {
