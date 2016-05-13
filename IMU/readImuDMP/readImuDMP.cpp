@@ -19,32 +19,6 @@ MPU6050 mpu_body(0x69);
 // on a remote host such as Processing or something though)
 #define OUTPUT_READABLE_QUATERNION
 
-// uncomment "OUTPUT_READABLE_EULER" if you want to see Euler angles
-// (in degrees) calculated from the quaternions coming from the FIFO.
-// Note that Euler angles suffer from gimbal lock (for more info, see
-// http://en.wikipedia.org/wiki/Gimbal_lock)
-//#define OUTPUT_READABLE_EULER
-
-// uncomment "OUTPUT_READABLE_YAWPITCHROLL" if you want to see the yaw/
-// pitch/roll angles (in degrees) calculated from the quaternions coming
-// from the FIFO. Note this also requires gravity vector calculations.
-// Also note that yaw/pitch/roll angles suffer from gimbal lock (for
-// more info, see: http://en.wikipedia.org/wiki/Gimbal_lock)
-//#define OUTPUT_READABLE_YAWPITCHROLL
-
-// uncomment "OUTPUT_READABLE_REALACCEL" if you want to see acceleration
-// components with gravity removed. This acceleration reference frame is
-// not compensated for orientation, so +X is always +X according to the
-// sensor, just without the effects of gravity. If you want acceleration
-// compensated for orientation, us OUTPUT_READABLE_WORLDACCEL instead.
-//#define OUTPUT_READABLE_REALACCEL
-
-// uncomment "OUTPUT_READABLE_WORLDACCEL" if you want to see acceleration
-// components with gravity removed and adjusted for the world frame of
-// reference (yaw is relative to initial orientation, since no magnetometer
-// is present in this case). Could be quite handy in some cases.
-//#define OUTPUT_READABLE_WORLDACCEL
-
 // uncomment "OUTPUT_TEAPOT" if you want output that matches the
 // format used for the InvenSense teapot demo
 //#define OUTPUT_TEAPOT
@@ -156,41 +130,7 @@ void loop() {
             #ifdef OUTPUT_READABLE_QUATERNION
                 // display quaternion values in easy matrix form: w x y z
                 mpu_head.dmpGetQuaternion(&q, headFifoBuffer);
-                printf("quat %7.2f %7.2f %7.2f %7.2f    ", q.w,q.x,q.y,q.z);
-            #endif
-
-            #ifdef OUTPUT_READABLE_EULER
-                // display Euler angles in degrees
-                mpu_head.dmpGetQuaternion(&q, headFifoBuffer);
-                mpu_head.dmpGetEuler(euler, &q);
-                printf("euler %7.2f %7.2f %7.2f    ", euler[0] * 180/M_PI, euler[1] * 180/M_PI, euler[2] * 180/M_PI);
-            #endif
-
-            #ifdef OUTPUT_READABLE_YAWPITCHROLL
-                // display Euler angles in degrees
-                mpu_head.dmpGetQuaternion(&q, headFifoBuffer);
-                mpu_head.dmpGetGravity(&gravity, &q);
-                mpu_head.dmpGetYawPitchRoll(ypr, &q, &gravity);
-                printf("ypr  %7.2f %7.2f %7.2f    ", ypr[0] * 180/M_PI, ypr[1] * 180/M_PI, ypr[2] * 180/M_PI);
-            #endif
-
-            #ifdef OUTPUT_READABLE_REALACCEL
-                // display real acceleration, adjusted to remove gravity
-                mpu_head.dmpGetQuaternion(&q, headFifoBuffer);
-                mpu_head.dmpGetAccel(&aa, headFifoBuffer);
-                mpu_head.dmpGetGravity(&gravity, &q);
-                mpu_head.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-                printf("areal %6d %6d %6d    ", aaReal.x, aaReal.y, aaReal.z);
-            #endif
-
-            #ifdef OUTPUT_READABLE_WORLDACCEL
-                // display initial world-frame acceleration, adjusted to remove gravity
-                // and rotated based on known orientation from quaternion
-                mpu_head.dmpGetQuaternion(&q, headFifoBuffer);
-                mpu_head.dmpGetAccel(&aa, headFifoBuffer);
-                mpu_head.dmpGetGravity(&gravity, &q);
-                mpu_head.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-                printf("aworld %6d %6d %6d    ", aaWorld.x, aaWorld.y, aaWorld.z);
+                printf("IMU1: quat %7.2f %7.2f %7.2f %7.2f    ", q.w,q.x,q.y,q.z);
             #endif
 
             #ifdef OUTPUT_TEAPOT
@@ -229,41 +169,7 @@ void loop() {
             #ifdef OUTPUT_READABLE_QUATERNION
                 // display quaternion values in easy matrix form: w x y z
                 mpu_body.dmpGetQuaternion(&q, bodyFifoBuffer);
-                printf("quat %7.2f %7.2f %7.2f %7.2f    ", q.w,q.x,q.y,q.z);
-            #endif
-
-            #ifdef OUTPUT_READABLE_EULER
-                // display Euler angles in degrees
-                mpu_body.dmpGetQuaternion(&q, bodyFifoBuffer);
-                mpu_body.dmpGetEuler(euler, &q);
-                printf("euler %7.2f %7.2f %7.2f    ", euler[0] * 180/M_PI, euler[1] * 180/M_PI, euler[2] * 180/M_PI);
-            #endif
-
-            #ifdef OUTPUT_READABLE_YAWPITCHROLL
-                // display Euler angles in degrees
-                mpu_body.dmpGetQuaternion(&q, bodyFifoBuffer);
-                mpu_body.dmpGetGravity(&gravity, &q);
-                mpu_body.dmpGetYawPitchRoll(ypr, &q, &gravity);
-                printf("ypr  %7.2f %7.2f %7.2f    ", ypr[0] * 180/M_PI, ypr[1] * 180/M_PI, ypr[2] * 180/M_PI);
-            #endif
-
-            #ifdef OUTPUT_READABLE_REALACCEL
-                // display real acceleration, adjusted to remove gravity
-                mpu_body.dmpGetQuaternion(&q, bodyFifoBuffer);
-                mpu_body.dmpGetAccel(&aa, bodyFifoBuffer);
-                mpu_body.dmpGetGravity(&gravity, &q);
-                mpu_body.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-                printf("areal %6d %6d %6d    ", aaReal.x, aaReal.y, aaReal.z);
-            #endif
-
-            #ifdef OUTPUT_READABLE_WORLDACCEL
-                // display initial world-frame acceleration, adjusted to remove gravity
-                // and rotated based on known orientation from quaternion
-                mpu_body.dmpGetQuaternion(&q, bodyFifoBuffer);
-                mpu_body.dmpGetAccel(&aa, bodyFifoBuffer);
-                mpu_body.dmpGetGravity(&gravity, &q);
-                mpu_body.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-                printf("aworld %6d %6d %6d    ", aaWorld.x, aaWorld.y, aaWorld.z);
+                printf("IMU2: quat %7.2f %7.2f %7.2f %7.2f    ", q.w,q.x,q.y,q.z);
             #endif
 
             #ifdef OUTPUT_TEAPOT
