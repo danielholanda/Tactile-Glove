@@ -2,7 +2,7 @@ CC = gcc
 CPP = g++
 CXXFLAGS = -DDMP_FIFO_RATE=9 -Wall -g -O2
 
-all: I2Cdev.o MPU6050.o readOneIMU readTwoIMUs testIO tactileHand
+all: I2Cdev.o MPU6050.o readOneIMU readTwoIMUs testIO tactileGlove
 
 I2Cdev.o: I2Cdev.cpp
 	$(CPP) $(CXXFLAGS) -c -o I2Cdev.o I2Cdev.cpp
@@ -19,5 +19,5 @@ readTwoIMUs: I2Cdev.o MPU6050.o readTwoIMUs.cpp
 testIO: testIO.c
 	$(CC) testIO.c -o testIO -lmraa
 
-tactileHand: I2Cdev.o MPU6050.o tactileHand.cpp
-	$(CPP)  tactileHand.cpp -o tactileHand -lm -lmraa I2Cdev.o MPU6050.o
+tactileGlove: I2Cdev.o MPU6050.o tactileGlove.cpp
+	$(CPP)  tactileGlove.cpp -o tactileGlove -lm -lmraa I2Cdev.o MPU6050.o

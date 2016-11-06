@@ -1,4 +1,5 @@
 #!/bin/bash
+#This is a simple way of commiting on Github
 
 echo -n "Enter your comment: "
 read comment
