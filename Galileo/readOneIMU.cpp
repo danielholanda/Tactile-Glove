@@ -209,79 +209,7 @@ void loop() {
         }
     }
     
- /*   
-    if (dmpBodyReady)
-    {
-        // get current FIFO count
-        bodyFifoCount = mpu_body.getFIFOCount();
 
-        if (bodyFifoCount == 1024) {
-            // reset so we can continue cleanly
-            mpu_body.resetFIFO();
-            printf("FIFO overflow!\n");
-
-        // otherwise, check for DMP data ready interrupt (this should happen frequently)
-        } else if (bodyFifoCount >= 42) {
-            // read a packet from FIFO
-            mpu_body.getFIFOBytes(bodyFifoBuffer, bodyPacketSize);
-
-            #ifdef OUTPUT_READABLE_QUATERNION
-                // display quaternion values in easy matrix form: w x y z
-                mpu_body.dmpGetQuaternion(&q, bodyFifoBuffer);
-                printf("quat %7.2f %7.2f %7.2f %7.2f    ", q.w,q.x,q.y,q.z);
-            #endif
-
-            #ifdef OUTPUT_READABLE_EULER
-                // display Euler angles in degrees
-                mpu_body.dmpGetQuaternion(&q, bodyFifoBuffer);
-                mpu_body.dmpGetEuler(euler, &q);
-                printf("euler %7.2f %7.2f %7.2f    ", euler[0] * 180/M_PI, euler[1] * 180/M_PI, euler[2] * 180/M_PI);
-            #endif
-
-            #ifdef OUTPUT_READABLE_YAWPITCHROLL
-                // display Euler angles in degrees
-                mpu_body.dmpGetQuaternion(&q, bodyFifoBuffer);
-                mpu_body.dmpGetGravity(&gravity, &q);
-                mpu_body.dmpGetYawPitchRoll(ypr, &q, &gravity);
-                printf("ypr  %7.2f %7.2f %7.2f    ", ypr[0] * 180/M_PI, ypr[1] * 180/M_PI, ypr[2] * 180/M_PI);
-            #endif
-
-            #ifdef OUTPUT_READABLE_REALACCEL
-                // display real acceleration, adjusted to remove gravity
-                mpu_body.dmpGetQuaternion(&q, bodyFifoBuffer);
-                mpu_body.dmpGetAccel(&aa, bodyFifoBuffer);
-                mpu_body.dmpGetGravity(&gravity, &q);
-                mpu_body.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-                printf("areal %6d %6d %6d    ", aaReal.x, aaReal.y, aaReal.z);
-            #endif
-
-            #ifdef OUTPUT_READABLE_WORLDACCEL
-                // display initial world-frame acceleration, adjusted to remove gravity
-                // and rotated based on known orientation from quaternion
-                mpu_body.dmpGetQuaternion(&q, bodyFifoBuffer);
-                mpu_body.dmpGetAccel(&aa, bodyFifoBuffer);
-                mpu_body.dmpGetGravity(&gravity, &q);
-                mpu_body.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-                printf("aworld %6d %6d %6d    ", aaWorld.x, aaWorld.y, aaWorld.z);
-            #endif
-
-            #ifdef OUTPUT_TEAPOT
-                // display quaternion values in InvenSense Teapot demo format:
-                teapotPacket[2] = bodyFifoBuffer[0];
-                teapotPacket[3] = bodyFifoBuffer[1];
-                teapotPacket[4] = bodyFifoBuffer[4];
-                teapotPacket[5] = bodyFifoBuffer[5];
-                teapotPacket[6] = bodyFifoBuffer[8];
-                teapotPacket[7] = bodyFifoBuffer[9];
-                teapotPacket[8] = bodyFifoBuffer[12];
-                teapotPacket[9] = bodyFifoBuffer[13];
-                Serial.write(teapotPacket, 14);
-                teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
-            #endif
-            printf("\n");
-        }
-    }
-    */
 }
 
 int main() {

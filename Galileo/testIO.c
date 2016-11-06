@@ -1,3 +1,4 @@
+//This program is used to test if the mini vibrators are working properly
 #include <stdio.h>
 #include <unistd.h>
 #include <errno.h>

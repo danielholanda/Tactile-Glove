@@ -90,12 +90,13 @@ void setup() {
     /* Set port number, using htons function to use proper byte order */
     serverAddr.sin_port = htons(7891);
     /* Set IP address to localhost */
-    serverAddr.sin_addr.s_addr = inet_addr("10.13.100.20");
+    serverAddr.sin_addr.s_addr = inet_addr("10.0.0.106");
     /* Set all bits of the padding field to 0 */
     memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 
     /*---- Connect the socket to the server using the address struct ----*/
     addr_size = sizeof serverAddr;
+    printf("Trying to connect to virtual environment...");
     connect(clientSocket, (struct sockaddr *) &serverAddr, addr_size);
 
 
