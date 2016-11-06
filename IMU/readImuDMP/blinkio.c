@@ -41,19 +41,19 @@ main(int argc, char** argv)
 
 
     while (running == 0) {
-        mraa_gpio_write(gpio[0], 0);
-        mraa_gpio_write(gpio[1], 0);
-        mraa_gpio_write(gpio[2], 0);
-        mraa_gpio_write(gpio[3], 0);
-        mraa_gpio_write(gpio[4], 0);
+       mraa_gpio_write(gpio[0], 0);
+       mraa_gpio_write(gpio[1], 0);
+       mraa_gpio_write(gpio[2], 0);
+       mraa_gpio_write(gpio[3], 0);
+       mraa_gpio_write(gpio[4], 0);
         printf("off\n");
 
         sleep(1);
-        mraa_gpio_write(gpio[0], 1);
-        mraa_gpio_write(gpio[1], 1);
-        mraa_gpio_write(gpio[2], 1);
-        mraa_gpio_write(gpio[3], 1);
-        mraa_gpio_write(gpio[4], 1);
+       mraa_gpio_write(gpio[0], 1);
+       mraa_gpio_write(gpio[1], 1);
+       mraa_gpio_write(gpio[2], 1);
+       mraa_gpio_write(gpio[3], 1);
+       mraa_gpio_write(gpio[4], 1);
         printf("on\n");
 
         sleep(1);

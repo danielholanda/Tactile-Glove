@@ -269,16 +269,21 @@ void loop() {
     	printf("Data received: %s\n",buffer_recv);
     	
 	uint8_t finger = (uint8_t)buffer_recv[0];
+	
+
 	for(int i=0;i<5;i++){
-		if((finger>>i)&&1==1){
-			printf("1_");
-			mraa_gpio_write(gpio[i],0);
-		}
-		else{
-			printf("0_");
+		if(finger&(1<<i)){
 			mraa_gpio_write(gpio[i],1);
+			printf("1_");
+
+		}else{
+			mraa_gpio_write(gpio[i],0);
+			printf("0_");
 		}
 	}
+
+
+
     	
     }
 }

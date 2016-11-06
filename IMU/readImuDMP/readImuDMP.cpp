@@ -154,10 +154,10 @@ void setup() {
     mraa_init();
     fprintf(stdout, "MRAA Version: %s\n", mraa_get_version());
     gpio[0] = mraa_gpio_init(thumb_f);
-    gpio[1] = mraa_gpio_init(index_f);
-    gpio[2] = mraa_gpio_init(middle_f);
-    gpio[3] = mraa_gpio_init(ring_f);
-    gpio[4] = mraa_gpio_init(pinky_f);
+    gpio[4] = mraa_gpio_init(index_f);
+    gpio[3] = mraa_gpio_init(middle_f);
+    gpio[2] = mraa_gpio_init(ring_f);
+    gpio[1] = mraa_gpio_init(pinky_f);
 
     // set direction to OUT
     mraa_gpio_dir(gpio[0], MRAA_GPIO_OUT);
@@ -269,16 +269,21 @@ void loop() {
     	printf("Data received: %s\n",buffer_recv);
     	
 	uint8_t finger = (uint8_t)buffer_recv[0];
+	
+
 	for(int i=0;i<5;i++){
-		if((finger>>i)&&1==1){
-			printf("1_");
+		if(finger&(1<<i)){
 			mraa_gpio_write(gpio[i],1);
-		}
-		else{
-			printf("0_");
+			printf("1_");
+
+		}else{
 			mraa_gpio_write(gpio[i],0);
+			printf("0_");
 		}
 	}
+
+
+
     	
     }
 }
