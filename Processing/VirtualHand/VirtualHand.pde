@@ -230,7 +230,7 @@ void draw() {
   	fing[2].coord=get3DPoint(refMatrix);
   	sphere(fingerSphereRadius);
   	translate(0, -aux, 0);
-  	box(6, 30, 6)
+  	box(6, 30, 6);
 
   	//Creates Middle
   	translate(-8, 0, 0);
