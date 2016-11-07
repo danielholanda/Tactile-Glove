@@ -15,17 +15,21 @@ This project depends on the MRAA library on the Intel® Galileo. This library ca
 ## How to Use
 ### Processing
 * Simply copy the project into your processing folder and tun it. The hand will not move until you start the program at your Galileo.
+
 ### Galileo
 * Copy the whole Galileo folder into one folder of the board running Linux (tested using Yocto).
 * Open "tactileGlove.cpp" and change the IP address to the IP of the computer running the virtual hand.
+    
     ```c++
     serverAddr.sin_addr.s_addr = inet_addr("YOUR.IP.HERE");
      ```
 * Compile the project
+    
     ```bash
     make
     ```
 * Run the program:
+    
     ```bash
     ./tactileGlove
     ```
