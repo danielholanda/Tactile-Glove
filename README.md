@@ -10,11 +10,11 @@ A simple way of experimenting with the tactile internet. Build a tactile glove t
 * 1 Power module (schematics comming soon)
 
 ## Dependencies
-This project depends on the MRAA library on the Intel® Galileo. This library can be four [here](https://github.com/intel-iot-devkit/mraa). 
+This project depends on the MRAA library on the Intel® Galileo. This library can be foud [here](https://github.com/intel-iot-devkit/mraa). This project also depends on toxilibs library on Processing. Toxilibs can be found [here](http://toxiclibs.org/downloads/).
 
 ## How to Use
 ### Processing
-* Simply copy the project into your processing folder and tun it. The hand will not move until you start the program at your Galileo.
+* Simply copy the project into your processing folder and run it. The hand will not move until you start the program at your Galileo.
 
 ### Galileo
 * Copy the whole Galileo folder into one folder of the board running Linux (tested using Yocto).
