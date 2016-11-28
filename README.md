@@ -51,7 +51,7 @@ Use [GitHub Issues](https://github.com/danielholanda/Tactile-Glove/issues) for a
 All pull requests are welcome !
 
 ## Authors
-This project was develloped by [Daniel Holanda](https://github.com/danielholanda/), [José Cláudio](https://github.com/cl4udio/) and [Matheus Torquato](https://github.com/matheusft/) as part of the 2016 Brazilian Intel® Embedded Systems Competition. During this event, this project was awarded with the 3rd place of over 200 projects.
+This project was develloped by [Prof. Marcelo Fernandes](https://www.researchgate.net/profile/Marcelo_Fernandes4), [Daniel Holanda](https://github.com/danielholanda/), [José Cláudio](https://github.com/cl4udio/) and [Matheus Torquato](https://github.com/matheusft/) from the Embedded Systems and Reconfigurable Hardware Research Group (GPSEHR/UFRN) as part of the 2016 Brazilian Intel® Embedded Systems Competition. During this event, this project was awarded with the 3rd place of over 200 projects.
 
 ## License
 This project uses the MIT license. See [LICENSE](https://github.com/danielholanda/Tactile-Glove/blob/master/LICENSE) for more details.
