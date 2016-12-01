@@ -215,38 +215,41 @@ void draw() {
   	box(22, 10, 10);
 
   	//Creates Pinky
-  	float aux=-14;
+  	float fingerLength=20;
   	float fingerSphereRadius=3.5;
-  	translate(42, -42, 0);
-  	translate(0, aux, 0);
+  	translate(42, -24-fingerLength/2, 0);
+  	translate(0, -fingerLength/2, 0);
   	fing[1].coord=get3DPoint(refMatrix);
   	sphere(fingerSphereRadius);
-  	translate(0, -aux, 0);
-  	box(6, 30, 6);
+  	translate(0, fingerLength/2, 0);
+  	box(6, -fingerLength, 6);
 
   	//Creates Ring
-  	translate(-8, 0, 0);
-  	translate(0, aux, 0);
-  	fing[2].coord=get3DPoint(refMatrix);
-  	sphere(fingerSphereRadius);
-  	translate(0, -aux, 0);
-  	box(6, 30, 6);
+    fingerLength=fingerLength+10;
+    translate(-8, 0, 0);
+    translate(0, -fingerLength/2, 0);
+    fing[2].coord=get3DPoint(refMatrix);
+    sphere(fingerSphereRadius);
+    translate(0, fingerLength/2, 0);
+    box(6, -fingerLength, 6);
 
   	//Creates Middle
-  	translate(-8, 0, 0);
-  	translate(0, aux, 0);
-  	fing[3].coord=get3DPoint(refMatrix);
-  	sphere(fingerSphereRadius);
-  	translate(0, -aux, 0);
-  	box(6, 30, 6);
+    fingerLength=fingerLength+5;
+    translate(-8, 0, 0);
+    translate(0, -fingerLength/2, 0);
+    fing[3].coord=get3DPoint(refMatrix);
+    sphere(fingerSphereRadius);
+    translate(0, fingerLength/2, 0);
+    box(6, -fingerLength, 6);
 
   	//Creates Index
+    fingerLength=fingerLength+-5;
   	translate(-8, 0, 0);
-  	translate(0, aux, 0);
-  	fing[4].coord=get3DPoint(refMatrix);
-  	sphere(fingerSphereRadius);
-  	translate(0, -aux, 0);
-  	box(6, 30, 6);
+    translate(0, -fingerLength/2, 0);
+    fing[4].coord=get3DPoint(refMatrix);
+    sphere(fingerSphereRadius);
+    translate(0, fingerLength/2, 0);
+    box(6, -fingerLength, 6);
 
   	//Pops the current transformation matrix off the matrix stack
   	popMatrix();
